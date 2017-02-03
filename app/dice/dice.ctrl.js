@@ -42,7 +42,7 @@
         var match = regex.exec(vm.formula.toLowerCase());
         
         var numDice = parseInt(match[1]);
-        var numSides = match[2] ? match[2] : 10;
+        var numSides = match[2] ? parseInt(match[2]) : 10;
         var numKeep = match[3] ? parseInt(match[3]) : numDice;
         var mod = match[4];
         var numExploding = 0;
@@ -80,7 +80,7 @@
                     var explodeArray = [];
                     for (var i = 0; i < numExplosions; i++) {
                         var explode = Math.ceil(Math.random() * numSides);
-                        explodeArray.push(roll);
+                        explodeArray.push(explode);
                         if (explode === numSides) {
                             numExploding++;
                         }
@@ -104,7 +104,6 @@
     }
 
     function onKeyDown(e) {
-        console.log(e);
         var allowedKeys = [46, 8, 9, 27, 13, 110, 68, 75, 107, 109];
         // Allow: backspace, delete, tab, escape, enter and . || Additions: d, k, +, -
         if (allowedKeys.indexOf(e.keyCode) !== -1 ||
