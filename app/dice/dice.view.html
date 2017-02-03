@@ -1,5 +1,6 @@
 <div id="dice-view" ng-controller="DiceController as vm">
-    <h2><b>DiceBin - Made specially for Lune</b></h2>
+    <h2 class="title"><b>DiceBin</b><br/><small>Made specially for Lune(SevenSigma)</small></h2>
+    <span class="credits">Made by BoredMai - nannesribeiro [at] gmail [dot] com</span>
     <h3>Quick Roll</h3>
     <div class="quick-roll-container">
         <button class="btn btn-default" ng-click="vm.quickRoll('1d4')">d4</button>
@@ -12,15 +13,15 @@
     </div>
     <h3>Custom Roll</h3>
     <div class="acc-formats">
-        Accepted Formats:
-        <ul>
-            <li><i class="fa fa-caret-right"></i> [qty]d[size][+mod|-mod] (Ex: 5d6+8)</li>
-            <li><i class="fa fa-caret-right"></i> [qty]k[keep] (Ex: 7k5, keep < qty)</li>
-        </ul>
+        <small>Accepted Format: [qty]d[size]k[keep][+mod|-mod]<br/>
+        You can omit either d[size] (default size is 10) or k[keep] (keeps all dices)</small>
     </div>
     <input class="form-control text-center" type="text" ng-keydown="vm.onKeyDown($event)" ng-keyup="vm.onKeyUp()" ng-model="vm.formula">
-    <label class="exploding-check" ng-show="vm.isKeep"><input type="checkbox"> Exploding Dice</label><br/>
+    <p class="error" ng-show="vm.errorMessage">{{vm.errorMessage}}</p>
+    <label class="exploding-check" ng-show="vm.isKeep"><input type="checkbox" ng-model="vm.explode"> Exploding Dice</label><br/>
     <button class="btn btn-default" ng-click="vm.customRoll()">Roll</button>
-    <h3>Result</h3>
-    <h2>{{vm.result}}</h2>
+    <div id="result" ng-show="vm.result">
+        <h3>Result</h3>
+        <h4 ng-bind-html="vm.result"></h4>
+    </div>
 </div>

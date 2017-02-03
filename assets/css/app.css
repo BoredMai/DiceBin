@@ -1,13 +1,32 @@
+body {
+    background-color: #F9F9F9;
+}
+
 #main {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100vh;
-    margin-top: -50px;
+    min-height: 100%;
 }
 
 #dice-view {
+    background-color: rgba(255, 255, 255, 0.85);
+    border-radius: 50px;
+    padding: 30px 40px;
     text-align: center;
+}
+
+#dice-view .title {
+    margin-bottom: 0;
+}
+
+#dice-view .title > small {
+    line-height: 32px;
+}
+
+#dice-view .credits {
+    font-weight: 400;
+    color: #777;
 }
 
 #dice-view .quick-roll-container > button {
@@ -16,16 +35,27 @@
 }
 
 #dice-view .acc-formats {
-    font-size: 0.9em;
-}
-
-#dice-view .acc-formats > ul {
-    width: fit-content;
-    text-align: left;
-    margin: 0px auto 10px;
-    list-style-type: none;
+    margin-bottom: 10px;
 }
 
 #dice-view .exploding-check {
     margin: 10px 0px;
+}
+
+#dice-view .error {
+    background-color: #f93e3e;
+    margin: 5px 0px;
+    border-radius: 5px;
+    color: white;
+}
+
+@media (max-height: 767px) {
+    #main {
+        padding: 0;
+    }
+
+    #dice-view {
+        border-radius: 0;
+        min-height: 100%;
+    }
 }

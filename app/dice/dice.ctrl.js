@@ -3,7 +3,7 @@
 
   angular.module('diceApp').controller('DiceController', DiceController);
 
-//   AdvancedController.$inject = ['$http', '$route', 'gameData'];
+//   DiceController.$inject = ['$location', '$anchorScroll'];
 
   function DiceController() {
     var vm = this;
@@ -11,6 +11,8 @@
     vm.formula = '';
     vm.result = '';
     vm.isKeep = false;
+    vm.explode = false;
+    vm.errorMessage = '';
 
     vm.quickRoll = quickRoll;
     vm.customRoll = customRoll;
@@ -28,24 +30,77 @@
     }
 
     function customRoll() {
-        if (!vm.formula.match(/([0-9]+)([dk])([0-9]+)([+-][0-9]+)?/g)) {
-            console.log('CAN\'T ACCEPT');
+        vm.errorMessage = '';
+        vm.result = '';
+
+        if (!vm.formula.match(/[0-9]+(([d][0-9]+([k][0-9]+)?)|(([d][0-9]+)?[k][0-9]+))([+-][0-9]+)?/g)) {
+            vm.errorMessage = 'Please input a formula in the correct format.'
             return;
         }
 
-        var formula = vm.formula.toLowerCase();
-        var numDice = formula.match(/^\d+/g)[0];
-        formula = formula.replace(numDice, '');
-        formula = formula.replace(/^[dk]/g, '');
-        var sideOrKeep = formula.match(/^\d+/g)[0];
-        formula = formula.replace(sideOrKeep, '');
-        var match = formula.match(/^[+-]\d*/g);
+        var regex = /([0-9]+)(?:[d])?([0-9]+)?(?:[k])?([0-9]+)?([+-][0-9]+)?/g;
+        var match = regex.exec(vm.formula.toLowerCase());
         
-        if (match) {
-            var mod = parseInt(match[0]);
+        var numDice = parseInt(match[1]);
+        var numSides = match[2] ? match[2] : 10;
+        var numKeep = match[3] ? parseInt(match[3]) : numDice;
+        var mod = match[4];
+        var numExploding = 0;
+        
+        if (numKeep > numDice) {
+            vm.errorMessage = 'You can\'t keep more dices than you\'re rolling!'
+            return;
         }
 
-        console.log(numDice, sideOrKeep, mod);
+        var rollArray = [];
+        for (var i = 0; i < numDice; i++) {
+            var roll = Math.ceil(Math.random() * numSides);
+            rollArray.push(roll);
+            if (vm.explode && roll === numSides) {
+                numExploding++;
+            }
+        }
+
+        rollArray.sort(function(a, b) { return a - b; }).reverse();
+
+        vm.result += "<p>Rolls: " + rollArray.toString() + '</p>';
+
+        var keepArray = rollArray.slice(0, numKeep);
+        if (numKeep < numDice) {
+            vm.result += '<p>Keeping: ' + keepArray.toString() + '</p>';
+        }
+
+        if (vm.explode) {
+            if (numExploding > 0) {
+                while (numExploding > 0) {
+                    vm.result += '<p>' + numExploding + ' exploded!</p>';
+                    var numExplosions = numExploding;
+                    numExploding = 0;
+
+                    var explodeArray = [];
+                    for (var i = 0; i < numExplosions; i++) {
+                        var explode = Math.ceil(Math.random() * numSides);
+                        explodeArray.push(roll);
+                        if (explode === numSides) {
+                            numExploding++;
+                        }
+                    }
+
+                    explodeArray.sort(function(a, b) { return a - b; }).reverse();
+                    keepArray = keepArray.concat(explodeArray);
+                    
+                    vm.result += '<p> Exploded into: ' + explodeArray.toString() + '</p>';
+                }
+                vm.result += '<p>After exploding: ' + keepArray.toString() + '</p>';
+            }
+        }
+
+        var total = keepArray.reduce(function(a, b) { return a + b; }, 0);
+        vm.result += '<p>Total: ' + total.toString();
+        if (mod) {
+            vm.result += mod + ' = ' + (total + parseInt(mod)).toString();
+        }
+        vm.result += '</p>';
     }
 
     function onKeyDown(e) {
@@ -56,6 +111,7 @@
             (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) || 
              // Allow: home, end, left, right, down, up
             (e.keyCode >= 35 && e.keyCode <= 40) ||
+            // Number Row + and -
             (e.shiftKey && e.keyCode === 187) || (!e.shiftKey && e.keyCode === 189)) {
                  // let it happen, don't do anything
                  return;
@@ -68,44 +124,10 @@
     }
 
     function onKeyUp(e) {
-        var formula = vm.formula.toLowerCase();
-        var newFormula = '';
-
-        // [qty]
-        var match = formula.match(/^\d+/g);
-        if (match)
-        {
-            newFormula += match[0];
-            formula = formula.replace(match[0], '');
-
-            // [k | d]
-            match = formula.match(/^[dk]/g);
-            if (match) {
-                newFormula += match[0];
-                formula = formula.replace(match[0], '');
-                vm.isKeep = match[0] === 'k';
-
-                // [keep | sides]
-                match = formula.match(/^\d+/g);
-                if (match)
-                {
-                    newFormula += match[0];
-                    formula = formula.replace(match[0], '');
-
-                    match = formula.match(/^[+-]\d*/g);
-                    
-                    if (match) {
-                        var mod = parseInt(match[0]);
-                        if (isNaN(mod) || mod === 0) {
-                            newFormula += match[0];
-                        } else {
-                            newFormula += mod > 0 ? '+' + mod.toString() : mod.toString();
-                        }
-                    }
-                }
-            }
-        }
-        vm.formula = newFormula;
+        var regex = /([0-9]+)([d])?([0-9]+)?([k])?([0-9]+)?([+-])?([0-9]+)?/g;
+        var match = regex.exec(vm.formula.toLowerCase());
+        vm.formula = match ? match[0] : '';
+        vm.isKeep = vm.formula.indexOf('k') !== -1;
     }
   }
 })();

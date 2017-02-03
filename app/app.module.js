@@ -1,1 +1,1 @@
-angular.module('diceApp', ['ngRoute']);
+angular.module('diceApp', ['ngRoute', 'ngSanitize']);
