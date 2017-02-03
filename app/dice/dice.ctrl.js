@@ -128,6 +128,10 @@
         var match = regex.exec(vm.formula.toLowerCase());
         vm.formula = match ? match[0] : '';
         vm.isKeep = vm.formula.indexOf('k') !== -1;
+        
+        if (e.keyCode === 13) {
+            vm.customRoll();
+        }
     }
   }
 })();

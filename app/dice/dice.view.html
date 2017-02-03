@@ -16,7 +16,7 @@
         <small>Accepted Format: [qty]d[size]k[keep][+mod|-mod]<br/>
         You can omit either d[size] (default size is 10) or k[keep] (keeps all dices)</small>
     </div>
-    <input class="form-control text-center" type="text" ng-keydown="vm.onKeyDown($event)" ng-keyup="vm.onKeyUp()" ng-model="vm.formula">
+    <input class="form-control text-center" type="text" ng-keydown="vm.onKeyDown($event)" ng-keyup="vm.onKeyUp($event)" ng-model="vm.formula">
     <p class="error" ng-show="vm.errorMessage">{{vm.errorMessage}}</p>
     <label class="exploding-check" ng-show="vm.isKeep"><input type="checkbox" ng-model="vm.explode"> Exploding Dice</label><br/>
     <button class="btn btn-default" ng-click="vm.customRoll()">Roll</button>
