@@ -104,6 +104,7 @@
     }
 
     function onKeyDown(e) {
+        console.log(e);
         var allowedKeys = [46, 8, 9, 27, 13, 110, 68, 75, 107, 109];
         // Allow: backspace, delete, tab, escape, enter and . || Additions: d, k, +, -
         if (allowedKeys.indexOf(e.keyCode) !== -1 ||
@@ -112,7 +113,7 @@
              // Allow: home, end, left, right, down, up
             (e.keyCode >= 35 && e.keyCode <= 40) ||
             // Number Row + and -
-            (e.shiftKey && e.keyCode === 187) || (!e.shiftKey && e.keyCode === 189)) {
+            (e.key === '+' || e.key === '-')) {
                  // let it happen, don't do anything
                  return;
         }
