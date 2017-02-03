@@ -1,0 +1,31 @@
+#main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin-top: -50px;
+}
+
+#dice-view {
+    text-align: center;
+}
+
+#dice-view .quick-roll-container > button {
+    width: 60px;
+    margin: 5px;
+}
+
+#dice-view .acc-formats {
+    font-size: 0.9em;
+}
+
+#dice-view .acc-formats > ul {
+    width: fit-content;
+    text-align: left;
+    margin: 0px auto 10px;
+    list-style-type: none;
+}
+
+#dice-view .exploding-check {
+    margin: 10px 0px;
+}
