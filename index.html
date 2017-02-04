@@ -3,7 +3,6 @@
         <script type="text/javascript" src="assets/libs/angular.js"></script>
         <script type="text/javascript" src="assets/libs/angular-route.min.js"></script>
         <script type="text/javascript" src="assets/libs/angular-sanitize.min.js"></script>
-        <script type="text/javascript" src="assets/libs/js.cookie.js"></script>
         <script type="text/javascript" src="app/app.module.js"></script>
         <script type="text/javascript" src="app/app.routes.js"></script>
         <script type="text/javascript" src="app/dice/dice.ctrl.js"></script>
@@ -13,8 +12,9 @@
         <link rel="shortcut icon" type="image/png" href="./favicon.png"/>
         <link href="https://fonts.googleapis.com/css?family=Ubuntu:400,500,700" rel="stylesheet">
         <title>DiceBin</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <base href="./">
         <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
         <meta name="description" content="DiceBin - A Basic Dice Roller for RPG and Wargames">
         <meta name="keywords" content="DiceBin, Dice, RPG, Wargame, DnD, Warhammer, Pathfinder, L5R">
         <meta name="author" content="Maianne Ribeiro">
@@ -22,12 +22,13 @@
         <meta property="og:description" content="A Basic Dice Roller for RPG and Wargames"/>
         <!--<meta property="og:image" content="./img/pokeball.png"/>-->
         <script>
-          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-          })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-          ga('create', 'UA-83158153-1', 'auto');
-          ga('send', 'pageview');
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+            ga('create', 'UA-83158153-2', 'auto');
+            ga('send', 'pageview');
         </script>
     </head>
     <body ng-app="diceApp">
@@ -42,7 +43,7 @@
                     data-ad-slot="3108392979"
                     data-ad-format="auto"></ins>
                 <script>
-                (adsbygoogle = window.adsbygoogle || []).push({});
+                    (adsbygoogle = window.adsbygoogle || []).push({});
                 </script>
             </div>
         </div>
