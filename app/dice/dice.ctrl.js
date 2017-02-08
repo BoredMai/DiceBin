@@ -63,11 +63,11 @@
 
         rollArray.sort(function(a, b) { return a - b; }).reverse();
 
-        vm.result += "<p>Rolls: " + rollArray.toString() + '</p>';
+        vm.result += "<p>Rolls: " + rollArray.toString().replace(/,/g, ', ') + '</p>';
 
         var keepArray = rollArray.slice(0, numKeep);
         if (numKeep < numDice) {
-            vm.result += '<p>Keeping: ' + keepArray.toString() + '</p>';
+            vm.result += '<p>Keeping: ' + keepArray.toString().replace(/,/g, ', ') + '</p>';
         }
 
         if (vm.explode) {
@@ -89,9 +89,9 @@
                     explodeArray.sort(function(a, b) { return a - b; }).reverse();
                     keepArray = keepArray.concat(explodeArray);
                     
-                    vm.result += '<p> Exploded into: ' + explodeArray.toString() + '</p>';
+                    vm.result += '<p> Exploded into: ' + explodeArray.toString().replace(/,/g, ', ') + '</p>';
                 }
-                vm.result += '<p>After exploding: ' + keepArray.toString() + '</p>';
+                vm.result += '<p>After exploding: ' + keepArray.toString().replace(/,/g, ', ') + '</p>';
             }
         }
 
